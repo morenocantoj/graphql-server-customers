@@ -9,16 +9,36 @@ app.get('/', (req, resp) => {
   res.send('All ready')
 })
 
-// GraphQL resolver
-const root = { customer: () => {
-  return {
-    "id": 192929292,
-    "name": "John",
-    "surname": "Doe",
-    "company": "Farysoft",
-    "email": "john.doe@example.com"
+// Customer class
+class Customer {
+  constructor(id, {name, surname, company, email}) {
+    this.id = id
+    this.name = name
+    this.company = company
+    this.email = email
   }
-}}
+}
+
+// Aux DB
+const customersDB = {}
+
+// GraphQL resolver
+const root = {
+  customer: () => {
+    return {
+      "id": 192929292,
+      "name": "John",
+      "surname": "Doe",
+      "company": "Farysoft",
+      "email": "john.doe@example.com"
+    }
+  },
+  createCustomer: ({input}) => {
+    const id = require('crypto').randomBytes(10).toString('hex')
+    customersDB[id] = input;
+    return new Customer(id, input)
+  }
+};
 
 app.use('/graphql', graphqlHTTP({
   schema,

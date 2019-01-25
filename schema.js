@@ -1,9 +1,16 @@
 import { buildSchema } from 'graphql'
 
 const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
+    type Customer {
+      id: ID
+      name: String
+      surname: String
+      company: String
+      email: String
+    }
+    type Query {
+      customer: Customer
+    }
   `)
 
 export default schema

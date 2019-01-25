@@ -1,3 +1,6 @@
+import mongoose from 'mongoose'
+import { Customers } from './db'
+
 // Customer class
 class Customer {
   constructor(id, {name, surname, company, emails, age, type, orders}) {
@@ -12,9 +15,6 @@ class Customer {
   }
 }
 
-// Aux DB
-const customersDB = {}
-
 export const resolvers = {
   Query: {
     getCustomer: ({id}) => {
@@ -22,10 +22,24 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createCustomer: ({input}) => {
-      const id = require('crypto').randomBytes(10).toString('hex')
-      customersDB[id] = input;
-      return new Customer(id, input)
+    createCustomer: (root, {input}) => {
+      const newCustomer = new Customers({
+        name: input.name,
+        surname: input.surname,
+        company: input.company,
+        emails: input.emails,
+        age: input.age,
+        type: input.type,
+        orders: input.orders
+      })
+      newCustomer.id = newCustomer._id
+
+      return new Promise((resolve, object) => {
+        newCustomer.save((error) => {
+          if(error) rejects(error)
+          else resolve(newCustomer)
+        })
+      })
     }
   }
 }

@@ -15,16 +15,17 @@ class Customer {
 // Aux DB
 const customersDB = {}
 
-// GraphQL resolver
-const resolvers = {
-  getCustomer: ({id}) => {
-    return new Customer(id, customersDB[id])
+export const resolvers = {
+  Query: {
+    getCustomer: ({id}) => {
+      return new Customer(id, customersDB[id])
+    },
   },
-  createCustomer: ({input}) => {
-    const id = require('crypto').randomBytes(10).toString('hex')
-    customersDB[id] = input;
-    return new Customer(id, input)
+  Mutation: {
+    createCustomer: ({input}) => {
+      const id = require('crypto').randomBytes(10).toString('hex')
+      customersDB[id] = input;
+      return new Customer(id, input)
+    }
   }
-};
-
-export default resolvers
+}

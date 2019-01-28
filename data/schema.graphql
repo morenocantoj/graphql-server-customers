@@ -45,4 +45,6 @@ type Mutation {
   # resolver's name, input with data and what it returns
   """ Creates a new customer and saves it in database """
   createCustomer(input: CustomerInput): Customer
+  updateCustomer(input: CustomerInput): Customer
+  deleteCustomer(id: ID!): Boolean
 }

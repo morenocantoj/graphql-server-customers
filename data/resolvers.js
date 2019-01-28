@@ -17,8 +17,13 @@ class Customer {
 
 export const resolvers = {
   Query: {
-    getCustomer: ({id}) => {
-      return new Customer(id, customersDB[id])
+    getCustomer: (root, {id}) => {
+      return new Promise((resolve, reject) => {
+        Customers.findById(id, (error, customer) => {
+          if (error) reject(error)
+          else resolve(customer)
+        })
+      })
     },
     getCustomers: (root, {limit}) => {
       return Customers.find({}).limit(limit)

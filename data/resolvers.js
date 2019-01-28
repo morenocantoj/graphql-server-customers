@@ -20,6 +20,9 @@ export const resolvers = {
     getCustomer: ({id}) => {
       return new Customer(id, customersDB[id])
     },
+    getCustomers: (root, {limit}) => {
+      return Customers.find({}).limit(limit)
+    }
   },
   Mutation: {
     createCustomer: (root, {input}) => {
@@ -34,26 +37,26 @@ export const resolvers = {
       })
       newCustomer.id = newCustomer._id
 
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         newCustomer.save((error) => {
-          if (error) rejects(error)
+          if (error) reject(error)
           else resolve(newCustomer)
         })
       })
     },
     updateCustomer: (root, {input}) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         // If customer does not exist create a new one
         Customers.findOneAndUpdate({_id: input.id}, input, {new: true}, (error, customer) => {
-          if (error) rejects(error)
+          if (error) reject(error)
           else resolve(customer)
         })
       })
     },
     deleteCustomer: (root, {id}) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         Customers.findOneAndRemove({_id: id}, (error) => {
-          if (error) rejects(error)
+          if (error) reject(error)
           else resolve(true)
         })
       })

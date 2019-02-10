@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { Customers } from './db'
+import { Customers, Products } from './db'
 
 // Customer class
 class Customer {
@@ -71,6 +71,21 @@ export const resolvers = {
         Customers.findOneAndRemove({_id: id}, (error) => {
           if (error) reject(error)
           else resolve(true)
+        })
+      })
+    },
+    newProduct: (root, {input}) => {
+      const newProduct = new Products({
+        name: input.name,
+        price: input.price,
+        stock: input.stock
+      })
+      newProduct.id = newProduct._id
+
+      return new Promise((resolve, reject) => {
+        newProduct.save((error) => {
+          if (error) reject(error)
+          else resolve(newProduct)
         })
       })
     }

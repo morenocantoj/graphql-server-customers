@@ -15,6 +15,12 @@ type Order {
 type Email {
   email: String
 }
+type Product {
+  id: ID
+  name: String
+  price: Int
+  stock: Int
+}
 enum CustomerType {
   BASIC
   PREMIUM
@@ -42,6 +48,13 @@ input CustomerInput {
   type: CustomerType!
   orders: [OrderInput]
 }
+""" New Product fields """
+input ProductInput {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
 """ Mutations to create new Customers """
 type Mutation {
   # resolver's name, input with data and what it returns
@@ -49,4 +62,6 @@ type Mutation {
   createCustomer(input: CustomerInput): Customer
   updateCustomer(input: CustomerInput): Customer
   deleteCustomer(id: ID!): Boolean
+  # Products
+  newProduct(input: ProductInput): Product
 }

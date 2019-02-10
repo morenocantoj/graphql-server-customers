@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 mongoose.Promise = global.Promise
 
 mongoose.connect('mongodb://localhost/customers', {useNewUrlParser: true})
+mongoose.set('setAndModify', false)
+
 
 // Customers' schema
 
@@ -18,4 +20,13 @@ const customersSchema = new mongoose.Schema({
 
 const Customers = mongoose.model('customers', customersSchema)
 
-export { Customers }
+// Products
+const productsSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  stock: Number
+})
+
+const Products = mongoose.model('products', productsSchema)
+
+export { Customers, Products }

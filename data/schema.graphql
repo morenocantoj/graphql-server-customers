@@ -68,4 +68,5 @@ type Mutation {
   deleteCustomer(id: ID!): Boolean
   # Products
   newProduct(input: ProductInput): Product
+  updateProduct(input: ProductInput): Product
 }

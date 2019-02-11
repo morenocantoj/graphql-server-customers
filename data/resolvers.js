@@ -99,6 +99,15 @@ export const resolvers = {
           else resolve(newProduct)
         })
       })
+    },
+    updateProduct: (root, {input}) => {
+      return new Promise((resolve, reject) => {
+        // If product does not exisst create a new one
+        Products.findOneAndUpdate({_id: input.id}, input, {new: true}, (error, product) => {
+          if (error) reject(error)
+          else resolve(product)
+        })
+      })
     }
   }
 }

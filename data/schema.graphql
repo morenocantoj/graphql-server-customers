@@ -29,6 +29,10 @@ type Query {
   getCustomer(id: ID): Customer
   getCustomers(limit: Int, offset: Int): [Customer]
   totalCustomers: Int
+
+  # Products
+  getProducts(limit: Int, offset: Int): [Product]
+  getProduct(id: ID): Product
 }
 input OrderInput {
   product: String

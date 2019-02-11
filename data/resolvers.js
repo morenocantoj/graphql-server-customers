@@ -35,6 +35,17 @@ export const resolvers = {
           else resolve(count)
         })
       })
+    },
+    getProducts: (root, {limit, offset}) => {
+      return Products.find({}).limit(limit).skip(offset)
+    },
+    getProduct: (root, {id}) => {
+      return new Promise((resolve, reject) => {
+        Products.findById(id, (error, product) => {
+          if (error) reject(error)
+          else resolve(product)
+        })
+      })
     }
   },
   Mutation: {

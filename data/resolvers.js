@@ -79,7 +79,7 @@ export const resolvers = {
     },
     deleteCustomer: (root, {id}) => {
       return new Promise((resolve, reject) => {
-        Customers.findOneAndRemove({_id: id}, (error) => {
+        Customers.findOneAndDelete({_id: id}, (error) => {
           if (error) reject(error)
           else resolve(true)
         })
@@ -106,6 +106,14 @@ export const resolvers = {
         Products.findOneAndUpdate({_id: input.id}, input, {new: true}, (error, product) => {
           if (error) reject(error)
           else resolve(product)
+        })
+      })
+    },
+    deleteProduct: (root, {id}) => {
+      return new Promise((resolve, reject) => {
+        Products.findOneAndDelete({_id: id}, (error) => {
+          if (error) reject(error)
+          else resolve(true)
         })
       })
     }
